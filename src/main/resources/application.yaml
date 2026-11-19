@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: ai-agent-ci-cd-reliability-analyser
+
+server:
+  port: 8081
