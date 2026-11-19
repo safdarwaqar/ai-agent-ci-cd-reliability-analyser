@@ -1,29 +1,45 @@
-pipeline {
 
+pipeline {
     agent any
 
     stages {
 
         stage('Checkout') {
             steps {
+                echo 'Checking out GitHub repository'
                 checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                dir('backend') {
-                    sh './gradlew clean build'
-                }
+                echo 'Building Spring Boot application'
+                sh 'chmod +x gradlew'
+                sh './gradlew clean build'
             }
         }
 
         stage('Test') {
             steps {
-                dir('backend') {
-                    sh './gradlew test'
-                }
+                echo 'Running application tests'
+                sh './gradlew test'
             }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deployment stage'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
